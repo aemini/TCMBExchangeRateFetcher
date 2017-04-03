@@ -123,7 +123,6 @@ public class TCMBExchangeRates extends HttpComponent {
 			exchangeRate.setCrossRateOther(crossRateOther);
 
 			exchangeRates.add(exchangeRate);
-			System.out.println(exchangeRate);
 		}
 
 		return exchangeRates;
