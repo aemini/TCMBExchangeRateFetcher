@@ -1,10 +1,11 @@
 package com.aryaemini.tcmb.http;
 
-import com.aryaemini.tcmb.exception.ParseException;
+import com.aryaemini.tcmb.exception.ExchangeRateParseException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -16,33 +17,38 @@ import java.io.InputStream;
 
 public class HttpComponent {
 
-	protected Document getDocument(String url) throws ParseException {
+	private static final Logger logger = Logger.getLogger(HttpComponent.class);
+
+	protected Document getDocument(String url) throws ExchangeRateParseException {
 		try {
-			HttpResponse response = response(url);
+			HttpResponse response = httpResponse(url);
 			return inputStreamToDocument(response.getEntity().getContent());
 		} catch (IOException e) {
-			//TODO log this
-			throw new ParseException(e.getMessage(), e);
-		} catch (SAXException e) {
-			//TODO log this
-			throw new ParseException(e.getMessage(), e);
+			throw new ExchangeRateParseException(e.getMessage(), e);
 		}
 	}
 
-	private HttpResponse response(String url) throws IOException {
+	private HttpResponse httpResponse(String url) throws IOException {
 		HttpGet request = new HttpGet(url);
 		return httpClient().execute(request);
 	}
 
-	private Document inputStreamToDocument(InputStream is) throws IOException, SAXException {
+	private Document inputStreamToDocument(InputStream is) throws ExchangeRateParseException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
 		try {
 			builder = factory.newDocumentBuilder();
+			return builder.parse(is);
+		} catch (IOException e) {
+			logger.error(e);
+			throw new ExchangeRateParseException(e.getMessage(), e);
 		} catch (ParserConfigurationException e) {
-			//TODO log this
+			logger.error(e);
+			throw new ExchangeRateParseException(e.getMessage(), e);
+		} catch (SAXException e) {
+			logger.error(e);
+			throw new ExchangeRateParseException(e.getMessage(), e);
 		}
-		return builder.parse(is);
 	}
 
 	private HttpClient httpClient() {

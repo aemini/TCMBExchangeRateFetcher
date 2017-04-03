@@ -1,18 +1,18 @@
 package com.aryaemini.tcmb.exception;
 
-public class ParseException extends Exception {
+public class ExchangeRateException extends Exception {
 
-	private static final long serialVersionUID = 100L;
+	private static final long serialVersionUID = 200L;
 	private String message;
 	private Throwable cause;
 
-	public ParseException() {}
+	public ExchangeRateException() {}
 
-	public ParseException(String message) {
+	public ExchangeRateException(String message) {
 		this.message = message;
 	}
 
-	public ParseException(String message, Throwable cause) {
+	public ExchangeRateException(String message, Throwable cause) {
 		this.message = message;
 		this.cause = cause;
 	}
