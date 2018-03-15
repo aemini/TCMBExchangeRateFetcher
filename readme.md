@@ -1,3 +1,4 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aryaemini/tcmb-exchange-rate-fetcher/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aryaemini/tcmb-exchange-rate-fetcher/)
 # T.C. Merkez Bankası döviz kurları
 
 T.C. Merkez Bankası döviz kurlarını çeken bileşen.
