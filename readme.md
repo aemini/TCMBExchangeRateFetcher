@@ -12,13 +12,11 @@ T.C. Merkez Bankası döviz kurlarını çeken bileşen.
     </dependency>
 
 
-## 2. Gereklilikler
-* classpath altında log4j.properties konfigürasyonu bulunmalıdır.
-
-## 3. Kullanım
+## 2. Kullanım
 ```java
 try {
-    TCMBResponse tcmbResponse = TCMBExchangeRateFetcher.fetch();
+    TCMBExchangeRateFetcher fetcher = TCMBExchangeRateFetcher.getInstance();
+    TCMBResponse tcmbResponse = fetcher.fetch();
     System.out.println(tcmbResponse.getBulletinNo());
     System.out.println(tcmbResponse.getDate().toString());
     for(Currency currency : tcmbResponse.getCurrencies()) {

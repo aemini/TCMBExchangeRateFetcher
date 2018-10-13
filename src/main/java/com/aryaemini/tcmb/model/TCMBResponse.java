@@ -30,6 +30,10 @@ public class TCMBResponse {
 		return strToDate(strDate, "dd.MM.yyyy");
 	}
 
+	public String getStrDate() {
+		return this.strDate;
+	}
+
 	@XmlAttribute(name="Tarih")
 	public void setStrDate(String strDate) {
 		this.strDate = strDate;

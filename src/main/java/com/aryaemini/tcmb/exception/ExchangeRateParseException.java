@@ -1,6 +1,6 @@
 package com.aryaemini.tcmb.exception;
 
-public class ExchangeRateParseException extends Exception {
+public class ExchangeRateParseException extends RuntimeException {
 
 	private static final long serialVersionUID = 100L;
 	private String message;

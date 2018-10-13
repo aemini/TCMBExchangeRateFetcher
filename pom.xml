@@ -5,12 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.aryaemini</groupId>
     <artifactId>tcmb-exchange-rate-fetcher</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>TCMB döviz kurları</name>
     <description>T.C. Merkez Bankası sisteminden döviz kurları çeken araç.</description>
     <url>https://github.com/aemini/TCMBExchangeRateFetcher</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
 
     <licenses>
         <license>
@@ -46,14 +51,6 @@
         </repository>
     </distributionManagement>
 
-    <dependencies>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency>
-    </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -72,7 +69,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
