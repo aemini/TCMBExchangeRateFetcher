@@ -4,7 +4,9 @@ import com.aryaemini.tcmb.exception.ExchangeRateException;
 import com.aryaemini.tcmb.model.TCMBResponse;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -15,34 +17,38 @@ import java.util.logging.Logger;
 
 public class TCMBExchangeRateFetcher {
 
-	private static TCMBExchangeRateFetcher _this;
+	private static TCMBExchangeRateFetcher fetcher;
 	private static final Logger logger = Logger.getLogger(TCMBExchangeRateFetcher.class.getName());
+	private static final String TCMB_URL = "https://tcmb.gov.tr/kurlar/";
 
 	private TCMBExchangeRateFetcher() {
 	}
 
 	public static TCMBExchangeRateFetcher getInstance() {
-		if(_this == null) {
-			_this = new TCMBExchangeRateFetcher();
+		if(fetcher == null) {
+			fetcher = new TCMBExchangeRateFetcher();
 		}
-		return _this;
+		return fetcher;
 	}
 
-	public TCMBResponse fetch() throws ExchangeRateException {
-		return fetchUrl("http://tcmb.gov.tr/kurlar/today.xml");
+	public TCMBResponse fetch() {
+		return fetchUrl(TCMB_URL + "today.xml");
 	}
 
-	public TCMBResponse fetch(Date date) throws ExchangeRateException {
-		String url = "http://tcmb.gov.tr/kurlar/" + dateToString(date, "yyyyMM") + "/" + dateToString(date, "ddMMyyyy") + ".xml";
+	public TCMBResponse fetch(Date date) {
+		String url = TCMB_URL + dateToString(date, "yyyyMM") + "/" + dateToString(date, "ddMMyyyy") + ".xml";
 		return fetchUrl(url);
 	}
 
-	private TCMBResponse fetchUrl(String url) throws ExchangeRateException {
+	private TCMBResponse fetchUrl(String url) {
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(TCMBResponse.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			return (TCMBResponse) unmarshaller.unmarshal(new URL(url));
-		} catch (Exception e) {
+		} catch (JAXBException e) {
+			logger.warning(e.getMessage());
+			throw new ExchangeRateException(e.getMessage(), e);
+		} catch (MalformedURLException e) {
 			logger.warning(e.getMessage());
 			throw new ExchangeRateException(e.getMessage(), e);
 		}

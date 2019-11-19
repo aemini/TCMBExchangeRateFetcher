@@ -3,6 +3,10 @@
 
 T.C. Merkez Bankası döviz kurlarını çeken bileşen.
 
+#### 1.0.3
+- Merkez Bankası'nın SSL ile gelme zorunluluğundan gelen hata giderildi.
+
+
 ## 1. pom.xml
 
     <dependency>
